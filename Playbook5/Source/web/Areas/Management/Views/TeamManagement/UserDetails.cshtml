@@ -1,0 +1,101 @@
+﻿@model web.Areas.Management.ViewModels.UserViewModel
+@{
+    ViewBag.Title = "TeamDetails";
+    Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus { color: #c63214 !important; cursor: default; background-color: #15151e !important; border: 0px !important; border-bottom-color: transparent; border-radius: 0 0 0 0 !important; border-top-left-radius: 4px; border-bottom-left-radius: 4px; box-shadow: 4px 4px 14px 0 rgba(21, 21, 30, .15); }
+
+    .nav-tabs > li > a, .nav-tabs > li > a:hover, .nav-tabs > li > a:focus { color: #ededf4 !important; margin-right: 0px; line-height: 1.42857143; border: 0px !important; border-radius: 0 0 0 0 !important; }
+</style>
+
+    <div class="main-section" id="Top">
+        <div class="container container_upperbuttons w-container">
+            <ul class="nav nav-tabs">
+                <li><a class="button_upper button_upperleft gray-button w-button" href="javascript:void" onclick="window.history.go(-1)">BACK</a></li>
+                <li class="active"><a class="button_upper button_upperleft gray-button w-button" data-toggle="tab" href="#historyTab">HISTORY</a></li>
+                <li><a class="button_upper button_upperleft gray-button w-button" data-toggle="tab" href="#dataTab">DATA</a></li>                
+            </ul>
+        </div>
+    </div>
+<div class="fullview-wrapper w-container">
+    <div class="team-header text-uppercase">
+        <a class="icon-btn" data-toggle="modal" data-target="#addedituser">
+            <i class="material-icons">mode_edit</i>
+        </a>
+        <h4 class="text-center">@Model.User.FirstName || @Model.Team.Name</h4>
+        <img class="" src="~/Content/images/red-border.png" width="100%" />
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-2">
+            @Html.LabelFor(m => m.Team.Name)
+            @Html.Label(Model.Team.Name)
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(m => m.User.Email)
+            @Html.Raw(Model.User.Email)
+        </div>
+        <div class="col-md-1">
+            @Html.LabelFor(m => m.User.Phone)
+            @Html.Label(Model.User.Phone)
+        </div>
+        <div class="col-md-1">
+            @Html.LabelFor(m => m.User.Position)
+            @Html.Label(Model.User.Position)
+        </div>
+        <div class="col-md-1">
+            @Html.LabelFor(m => m.Team.City)
+            @Html.Label(Model.Team.City)
+        </div>
+        <div class="col-md-1">
+            @Html.Label("State,Country")
+            @Html.Label(Model.Team.StateOrProvince + "," + Model.Team.Country)
+        </div>
+        <div class="col-md-1">
+            @Html.Label("Start Date")
+            @Html.Label(Model.Team.AccountStartDate.HasValue ? Model.Team.AccountStartDate.Value.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture) : "")
+        </div>
+        <div class="col-md-1">
+            @Html.LabelFor(m => m.Team.SupportTickets)
+            @Html.Label("0")
+        </div>
+        <div class="col-md-1">
+            @Html.Label("Seasons")
+            @Html.Label("0")
+        </div>
+    </div>
+</div>
+<div class="fullview-wrapper w-container">
+    <div class="tab-content">
+        <div id="historyTab" class="tab-pane fade in active">
+            @Html.Partial("_UserHistoryTabContentPartial", Model.UserHistory)
+        </div>
+        <div id="dataTab" class="tab-pane fade">
+            @Html.Partial("_UserDataTabContentPartial", Model.UserData)
+        </div>
+    </div>
+</div>
+    <div class="footer">
+        <div class="containterfooter w-container">
+            <div class="row w-row">
+                <div class="column-3 w-col w-col-6 w-col-tiny-tiny-stack">
+                    <div class="footertextblock">Questions?&nbsp;</div><a class="link_footer_support" href="#">Contact Support</a>
+                </div>
+                <div class="column-2 w-col w-col-6 w-col-tiny-tiny-stack">
+                    <a class="w-inline-block" href="http://www.playbookfive.com">
+                        <div class="footertextblock">© 2017 &nbsp;Playbook Five Inc.</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*POPUP*@
+
+    @Html.Partial("_AddEditUser", Model.User, new ViewDataDictionary { { "Roles", Model.Roles } })
+
+
+
+    @section generalscript {
+    }
+    

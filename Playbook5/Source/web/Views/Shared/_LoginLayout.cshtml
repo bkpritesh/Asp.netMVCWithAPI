@@ -1,0 +1,46 @@
+﻿@using web.Models
+<!DOCTYPE html>
+<!--  This site was created in Webflow. http://www.webflow.com -->
+<!--  Last Published: Sat Apr 01 2017 07:04:40 GMT+0000 (UTC)  -->
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Playbook Five - @ViewBag.Title</title>
+    <meta content="Playbook Five - @ViewBag.Title" name="description">
+    <meta content="@ViewBag.Title" property="og:title">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="~/Content/css/normalize.css" rel="stylesheet"/>
+    <link href="~/Content/css/webflow.css" rel="stylesheet"/>
+    <link href="~/Content/css/playbook-five-account-admin.webflow.css" rel="stylesheet"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+    <script type="text/javascript">
+        WebFont.load({
+            google: {
+                families: [
+                    "Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic",
+                    "Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic"
+                ]
+            }
+        });
+    </script>
+
+    <script src="~/Content/scripts/modernizr.js"></script>
+    <link href="~/Content/images/PB5_App_Logo_02_Square_favicon.png" rel="shortcut icon" type="image/x-icon">
+    <link href="~/Content/images/PB5_App_Logo_02_Square_256.png" rel="apple-touch-icon">
+</head>
+<body class="body_login login_errortext">
+    <div class="login_section">
+        <div class="div-block loginerrormobile">
+            <img class="image loginerrormobile" src="~/Content/images/Logo_Long_01.svg" width="500">
+        </div>
+    </div>
+    <div class="login_section">
+        @RenderBody()
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript"></script>
+<script src="~/Content/scripts/webflow.js"></script>
+ 
+    <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
+</body>
+</html>

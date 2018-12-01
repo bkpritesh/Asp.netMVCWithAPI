@@ -1,0 +1,38 @@
+﻿@using web.Areas.Management.Models.TeamManagement
+@using web.Areas.Management.ViewModels
+@model PlayViewModel
+
+<div id="LibraryArchiveInstall" class="tab-pane fade">
+    <div class="player-tab-header">
+        Archive Install Library
+    </div>
+    <div class="fullview-wrapper pad-top-0">
+        <table class="table table-striped ui-table">
+            <thead>
+                <tr><td colspan="11" class="ui-td"><img class="mt-less-3" src="~/Content/images/red-border.png" width="100%" /> </td></tr>
+                <tr>
+                    <th> </th>
+                    <th>Title </th>
+                    <th>Description</th>
+                </tr>
+                <tr><td colspan="11" class="ui-td"><img class="" src="~/Content/images/red-border.png" width="100%" /> </td></tr>
+            </thead>
+            <tbody>
+                @{ 
+                    var InactiveTeamInstall = Model.TeamInstall.TeamInstalls.Where(x => x.Active == false);
+                    foreach (var item in InactiveTeamInstall)
+                    {
+                    <tr>
+                        <td>
+                            <a class="linktext_view " target="_blank" href="#" onclick="GetInstallTeamDetail('@ViewData["TeamId"] ','@item.Id')">Edit</a>
+                            @*| @Html.ActionLink("DELETE", "DeletePlayById", new { id = item.Id, teamId = ViewData["TeamId"] })*@
+                        </td>
+                        <td>@item.Title  </td>
+                        <td>@item.Description </td>
+                    </tr>
+                        }
+                    }
+            </tbody>
+        </table>
+    </div>
+</div>

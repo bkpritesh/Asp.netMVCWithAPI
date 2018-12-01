@@ -1,0 +1,164 @@
+﻿@using web.Areas.Management.Models.TeamManagement
+@model Team
+
+@*@using (Html.BeginForm("TeamDetails", "TeamManagement", FormMethod.Post, new { @class = "form" }))*@
+@using (Ajax.BeginForm("SaveTeamDetails", "TeamManagement", new AjaxOptions
+{
+    InsertionMode = InsertionMode.Replace, //target element(#patientList) will be replaced
+}))
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.Country)
+    @Html.HiddenFor(m => m.AccountStartDate)
+    <h4></h4>
+        <div class="col-md-12">
+            <img class="longredline" src="http://uploads.webflow.com/58d35834dd796fad03338c77/58d55e8b61c9af590f6551c3_Line_02_Med.svg">
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.Name)
+                @Html.TextBoxFor(m => m.Name, new { @class = "col-md-12 form-control", text = Model.Name })
+            </div>
+
+        </div>
+
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <h5 class="text-danger">General Information</h5>
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.AccountOwner)
+                @Html.TextBoxFor(m => m.AccountOwner, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AccountOwner)
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.Phone)
+                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Phone)
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.AccessCode)
+                @Html.TextBoxFor(m => m.AccessCode, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AccessCode)
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <h5 class="text-danger">Location</h5>
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.Address)
+                @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Address)
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.City)
+                @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.City)
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.StateOrProvince)
+                @Html.TextBoxFor(m => m.StateOrProvince, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.StateOrProvince)
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.Country)
+                @Html.DropDownListFor(m => m.CountryId, (List<SelectListItem>)ViewData["CountrySelectList"], new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CountryId)
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.ZipCode)
+                @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ZipCode)
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <h5 class="text-danger">Payment & Subscription</h5>
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.AccountStartDate)
+                @Html.Label(Model.AccountStartDate.HasValue ? Model.AccountStartDate.Value.ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture) : "N/A")
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.AccountPackage)
+                @Html.TextBoxFor(m => m.AccountPackage, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AccountPackage)
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.PaymentStatus)
+                @Html.DropDownListFor(m => m.PaymentStatus, web.Models.EnumExtensions.ToSelectList(Model.PaymentStatus), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PaymentStatus)
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <h5 class="text-danger">Details</h5>
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.Field)
+                @Html.TextBoxFor(m => m.Field, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Field)
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.LeagueDivConf)
+                @Html.TextBoxFor(m => m.LeagueDivConf, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.LeagueDivConf)
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.Language)
+                @Html.DropDownListFor(m => m.Language, web.Models.EnumExtensions.ToSelectList(Model.Language), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Language)
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.TotalCustomPlays)
+                @Html.TextBoxFor(m => m.TotalCustomPlays, new { @class = "form-control", placeholder = "#", @readonly = "readonly" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.RosterCount)
+                @Html.TextBoxFor(m => m.RosterCount, new { @class = "form-control", placeholder = "#", @readonly = "readonly" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.SecurityTickets)
+                @Html.TextBoxFor(m => m.SecurityTickets, new { @class = "form-control", placeholder = "#", @readonly = "readonly" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.SupportTickets)
+                @Html.TextBoxFor(m => m.SupportTickets, new { @class = "form-control", placeholder = "#", @readonly = "readonly" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.ArchivedPackages)
+                @Html.TextBoxFor(m => m.ArchivedPackages, new { @class = "form-control", value = "N/A", @readonly = "readonly" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.AccountStatus)
+                @Html.DropDownListFor(m => m.AccountStatus, web.Models.EnumExtensions.ToSelectList(Model.AccountStatus), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AccountStatus)
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.AccountManager)
+                @Html.TextBoxFor(m => m.AccountManager, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.Notes)
+                @Html.TextAreaFor(m => m.Notes, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary col-md-1 pull-right">
+                Save
+            </button>
+        </div>
+}

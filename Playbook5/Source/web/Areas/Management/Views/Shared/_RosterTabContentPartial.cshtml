@@ -1,0 +1,41 @@
+﻿@using web.Areas.Management.Models.TeamManagement
+@model Team
+
+<div class="fullview-wrapper w-container">
+    <div class="team-header">
+        <a class="div_add_button editimagswap w-inline-block" href="~/Management/TeamManagement/UserDetails?Id=-1&teamId=@Model.Id">
+            <img class="image-3" src="http://uploads.webflow.com/58d35834dd796fad03338c77/58d55e877d35d96a0f6c6467_Icon_AddUser.svg" width="64">
+        </a>        
+        <h4 class="text-center text-uppercase">Roster</h4>
+    </div>
+    <table class="table table-striped ui-table">  
+        <thead>
+            <tr><td colspan="11" class="ui-td"><img class="" src="~/Content/images/red-border.png" width="100%" /> </td></tr>
+            <tr>
+                <th>&nbsp; </th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th class="down-arrow left-25">User Type</th>
+            </tr>
+            <tr><td colspan="11" class="ui-td"><img class="" src="~/Content/images/red-border.png" width="100%" /> </td></tr>
+        </thead>
+        <tbody>
+            @if (Model.TeamUsers != null && Model.TeamUsers.Count > 0)
+            {
+                foreach (var item in Model.TeamUsers)
+                {
+                    <tr>
+                        <td>
+                            <a class="linktext_view " href="~/Management/TeamManagement/UserDetails?Id=@item.Id&teamId=@Model.Id">VIEW</a>
+                        </td>
+                        <td>@item.FirstName @item.LastName</td>
+                        <td>@item.Email</td>
+                        <td>@item.Phone</td>
+                        <td>@(item.Roles.Any() ? item.Roles[0] : "Player") </td>
+                    </tr>
+                }
+            }
+        </tbody>
+</table>
+</div>

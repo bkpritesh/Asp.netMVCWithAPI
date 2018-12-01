@@ -1,0 +1,58 @@
+﻿@model web.Areas.Management.ViewModels.TeamViewModel
+
+@{
+    Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
+}
+
+
+    <div class="fullview-wrapper w-container">
+        <div class="team-header">
+           <a class="icon-btn" target="_blank" href="~/Management/TeamManagement/TeamDetails/-1">
+                <i class="material-icons">add</i>                
+            </a>
+            <h4 class="text-center text-uppercase">All Accounts</h4>            
+        </div>
+        <table class="table table-striped ui-table">
+            <thead>
+                <tr><td colspan="11" class="ui-td"><img class="" src="~/Content/images/red-border.png" width="100%"/> </td></tr>
+                <tr>
+                    <th> </th>
+                    <th>Team</th>
+                    <th>Field</th>
+                    <th>Access Code</th>
+                    <th>Account Owner</th>
+                    <th>Pkg.</th>
+                    <th>Subscription Date</th>
+                    <th class="down-arrow">Representative</th>
+                    <th>League/div/conf</th>
+                    <th>State,Country</th>
+                    <th>City</th>
+                </tr>
+                <tr><td colspan="11" class="ui-td"><img class="" src="~/Content/images/red-border.png" width="100%" /> </td></tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.TeamModel)
+                    {
+                    <tr>
+                        <td class="textdescription">
+                            <a class="linktext_view " href="~/Management/TeamManagement/TeamDetails/@item.Id">VIEW</a>
+                        </td>
+                        <td>@item.Name</td>
+                        <td>@item.Field</td>
+                        <td>@item.AccessCode</td>
+                        <td>@item.AccountOwner</td>
+                        <td>@item.AccountPackage</td>
+                        <td>@(item.AccountStartDate.HasValue ? item.AccountStartDate.Value.ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture) : "")</td>
+                        <td>@item.AccountManager</td>
+                        <td>@item.LeagueDivConf</td>
+                        <td>@item.StateOrProvince</td>
+                        <td>@item.City</td>
+                    </tr>
+                    }
+            </tbody>
+        </table>
+    </div>
+
+@section generalscript {
+
+}

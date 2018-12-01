@@ -1,0 +1,29 @@
+﻿@model List<web.Areas.Management.Models.TeamManagement.UserHistory>
+<div class="team-header">
+    <h4 class="text-center text-uppercase">HISTORY</h4>
+</div>
+<table class="table ui-table">
+    <thead>
+        <tr><td colspan="11" class="ui-td"><img class="mt-less-3" src="~/Content/images/red-border.png" width="100%" /> </td></tr>
+        <tr>
+            <th class="down-arrow left-25">Time stamp</th>
+            <th>Action</th>
+            <th>Positions</th>
+            <th>Reps</th>
+            <th>Key %</th>
+        </tr>        
+        <tr><td colspan="11" class="ui-td"><img class="" src="~/Content/images/red-border.png" width="100%" /> </td></tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Timestamp</td>
+                <td>@item.Action </td>
+                <td>@item.Positions </td>
+                <td>@item.Reps </td>
+                <td>@item.Key </td>
+            </tr>
+        }
+        </tbody>
+</table>

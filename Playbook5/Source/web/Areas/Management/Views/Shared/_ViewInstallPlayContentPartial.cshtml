@@ -1,0 +1,98 @@
+﻿@using web.Areas.Management.Models.TeamManagement
+@using web.Areas.Management.ViewModels
+@model InstallPlayViewModel
+
+<button type="button" class="close" onclick="EnableInstallGridView()"><span aria-hidden="true">&times;</span></button>
+
+
+<div class="col-md-6">
+    <table class="table ui-table">
+        <thead>
+            <tr><td colspan="11" class="ui-td"><img class="mt-less-3" src="~/Content/images/red-border.png" width="100%" /> </td></tr>
+            <tr>
+                <th class="down-arrow left-25">Position</th>
+                <th>User</th>
+                <th>Reps</th>
+                <th>Key %</th>
+            </tr>
+            <tr><td colspan="11" class="ui-td"><img class="" src="~/Content/images/red-border.png" width="100%" /> </td></tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.UserData)
+            {
+                <tr>
+                    <td>@item.Position</td>
+                    <td>@item.LastName, @item.FirstName</td>
+                    <td>@item.Reps </td>
+                    <td>@item.Key </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="col-md-6">
+    <div class="inner-wrapper">
+        <div class="clearfix pad-top-bottom">
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.Play.Name)
+                @Html.Label(Model.Play.Name, new { @class = "normal-font" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.Play.IndicatorSet)
+                @Html.Label(!string.IsNullOrEmpty(Model.Play.IndicatorSet) ? Model.Play.IndicatorSet : "", new { @class = "normal-font" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.Play.Install)
+                @Html.Label(!string.IsNullOrEmpty(Model.Play.Install) ? Model.Play.Install : "", new { @class = "normal-font" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.Play.CreatedDate)
+                @Html.Label(Model.Play.CreatedDate.ToString("mm/dd/yyyy"), new { @class = "normal-font" })
+            </div>
+            <div class="col-md-12"><br /></div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.Play.OffenseFormation)
+                @Html.Label(Model.Play.OffenseFormation != null && !string.IsNullOrEmpty(Model.Play.OffenseFormation.FriendlyDisplay) ? Model.Play.OffenseFormation.FriendlyDisplay : "", new { @class = "normal-font" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.Play.Personnel)
+                @Html.Label(!string.IsNullOrEmpty(Model.Play.Personnel) ? Model.Play.Personnel : "", new { @class = "normal-font" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.Play.PlayType)
+                @Html.Label(!string.IsNullOrEmpty(Model.Play.PlayType) ? Model.Play.PlayType : "", new { @class = "normal-font" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.Play.Hash)
+                @Html.Label(!string.IsNullOrEmpty(Model.Play.Hash) ? Model.Play.Hash : "", new { @class = "normal-font" })
+            </div>
+        </div>
+    </div>
+
+    <div class="inner-wrapper">
+        <div class="clearfix pad-top-bottom">
+            <div>
+                @if (!string.IsNullOrEmpty(Model.Play.SvgUrl))
+                                    {
+                        <img src="@Model.Play.SvgUrl" />
+                                    }
+                                    else if (!string.IsNullOrEmpty(Model.Play.PreviewUrl))
+                                    {
+                        <img src="@Model.Play.PreviewUrl" />
+                                    }
+            </div>
+            <div class="inner-link">
+                @if (!string.IsNullOrEmpty(Model.Play.SvgUrl))
+                                    {
+                        <a href="javascript:void(0)" onclick="ChangeImage(this,'@Model.Play.SvgUrl')">SGV FILE</a>
+                                    }
+                @if (!string.IsNullOrEmpty(Model.Play.PreviewUrl))
+                                    {
+                        <a href="javascript:void(0)" onclick="ChangeImage(this,'@Model.Play.PreviewUrl')">ORIGINAL FILE</a>
+                                    }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+

@@ -1,0 +1,114 @@
+﻿@model web.Areas.Management.Models.TeamManagement.TeamInstallDTO
+
+
+
+<div class="inner-wrapper light-bg-color">
+    <div class="team-header">
+        <h4 class="text-center text-uppercase">@Model.Title</h4>
+        <img class="" src="/Content/images/red-border.png" width="100%">
+        <a href="javascript:void(0)" class="icon-btn" onclick="GetInstallTeamDetail('@ViewData["TeamId"] ','@Model.Id')">
+            <i class="material-icons">mode_edit</i>
+        </a>
+    </div>
+
+    <div class="row grp-start">
+        <div class="col-md-2">
+            @Html.Label("Coach:")
+            @(Model.Coach != null ? Model.Coach.LastName + ", " + Model.Coach.FirstName :"")
+        </div>
+        <div class="col-md-2">
+            @Html.Label("Play total:")
+            @Model.Plays.Count
+        </div>
+        <div class="col-md-2">
+            @Html.Label("Date Issued:")
+            @(Model.Date.HasValue ? Model.Date.Value.ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture) : "")
+        </div>
+        <div class="col-md-2">
+            @Html.Label("Date Created:")
+            @(Model.Date.HasValue ? Model.Date.Value.ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture) : "")
+        </div>
+        <div class="col-md-4">
+            @Html.Label("Install Notes:")
+            <div class="txt-wrapper min-100">
+                @Model.Description
+            </div>
+        </div>
+    </div>
+
+
+    @using (Html.BeginForm("SavePlayToTeam", "Install", new { Id = Model.Id, TeamId = ViewData["TeamId"] }, FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.TeamInstallId)
+        @Html.HiddenFor(m => m.Date)
+        @Html.HiddenFor(m => m.Description)
+        @Html.HiddenFor(m => m.Title)
+
+        var playSource = ((List<web.Areas.Management.Models.TeamManagement.Play>)ViewData["AllPlays"]);
+        if (playSource != null)
+        {
+            playSource.Insert(0, new web.Areas.Management.Models.TeamManagement.Play
+            {
+                Name = "",
+                Id = "-1"
+            });
+            <div class="row off-top-100">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        @Html.Label("Play :", new { })
+                        @Html.DropDownList("InstallPlay", playSource.Select(x => new SelectListItem { Value = x.Id, Text = x.Name }), new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-primary m-top-15">ADD</button>
+                </div>
+                <div class="col-md-9"></div>
+            </div>
+        }
+    }
+
+    @if (Model.Plays.Count > 0)
+    {
+
+        <table id="tblOffencePlays" class="table ui-table">
+            <thead>
+                <tr><td colspan="11" class="ui-td"><img class="mt-less-3" src="~/Content/images/red-border.png" width="100%" /> </td></tr>
+                <tr>
+                    <th> </th>
+                    <th>Name </th>
+                    <th class="down-arrow left-25">Formation</th>
+                    <th>Personnel</th>
+                    <th>Type</th>
+                    <th>Hash</th>
+                    <th>Indicator Set</th>
+                </tr>
+                <tr><td colspan="11" class="ui-td"><img class="" src="~/Content/images/red-border.png" width="100%" /> </td></tr>
+            <thead>
+            <tbody>
+                @foreach (var item in Model.Plays)
+                {
+                    <tr>
+                        <td class="text_rosterhistory textdescription">
+                            <a class="linktext_view " target="_blank" href="#" onclick="GetInstallPlayDetail('@ViewData["TeamId"]','@item.PlayId')">VIEW</a>
+                            |
+                            @Html.ActionLink("DELETE", "DeleteInstallPlay", new { id = Model.Id, playId = item.PlayId, teamId = ViewData["TeamId"] }, new
+                               {
+                                   onclick = "return confirm('Are you sure, you want to delete play?')"
+                               })
+                        </td>
+                        <td>@item.Name</td>
+                        <td>@item.OffenseFormation</td>
+                        <td>@item.Personnel</td>
+                        <td>@item.Type</td>
+                        <td>@item.Hash</td>
+                        <td>@item.IndicatorSet</td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    }
+
+</div>

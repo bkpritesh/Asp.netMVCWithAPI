@@ -1,0 +1,46 @@
+﻿@using web.Areas.Management.Models.TeamManagement
+@model List<Play>
+
+
+<div id="LibrarySpecialTeams" class="tab-pane fade">
+    <div class="player-tab-header">
+        Special Team Plays Library
+        
+        <a class="editimagswap icon-btn" onclick="OpenAddPlayPopup('Special Team')" href="javascript:void(0)">
+            <i class="material-icons">add</i>
+        </a>
+
+    </div>
+    <div class="fullview-wrapper pad-top-0">
+        <table class="table table-striped ui-table">
+            <thead>
+                <tr><td colspan="11" class="ui-td"><img class="mt-less-3" src="~/Content/images/red-border.png" width="100%" /> </td></tr>
+                <tr>
+                    <th> </th>
+                    <th>Name </th>
+                    <th>Type</th>
+                    <th class="down-arrow left-25">Formation</th>
+                    <th>Opponent</th>
+                    <th>Install</th>
+                </tr>
+                <tr><td colspan="11" class="ui-td"><img class="" src="~/Content/images/red-border.png" width="100%" /> </td></tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>
+                            <a class="linktext_view " target="_blank" href="#" onclick="GetPlayDetail('@ViewData["TeamId"]','@item.Id','Special Team')">VIEW</a>
+                            | @Html.ActionLink("DELETE", "DeletePlayById", new { id = item.Id, teamId = ViewData["TeamId"] })
+                        </td>
+                        <td>@item.Name  </td>
+                        <td>@item.PlayType </td>
+                        <td>@item.OffenseFormation.FriendlyDisplay </td>
+                        <td>-</td>
+                        <td>@item.Install</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

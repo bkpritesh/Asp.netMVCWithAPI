@@ -1,0 +1,24 @@
+﻿@using web.Areas.Management.Models.TeamManagement
+@using web.Areas.Management.ViewModels
+@model PlayViewModel
+
+<div class="w-container tab-content">
+    <ul class="nav nav-tabs playes-tab">
+        <li class="active"><a data-toggle="tab" href="#OffenseGeneral">General Notes</a></li>
+        <li><a data-toggle="tab" href="#Offense2">Offense</a></li>
+        <li><a href="#Defense" class="disabled">Defense</a></li>
+        <li><a href="#SpecialTeams" class="disabled">Special Teams</a></li>
+        <li class="archived"><a href="#LibraryArchiveInstall" data-toggle="tab" >Archived</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="OffenseGeneral" class="tab-pane fade in active">
+            @Html.Partial("_InstallGeneralTabContentPartial", Model)
+        </div>
+        <div id="Offense2" class="tab-pane fade">
+            @Html.Partial("_InstallOffenseTabContentPartial", Model)
+        </div>
+
+        @Html.Partial("_LibraryArchiveInstallPartial", Model, new ViewDataDictionary { { "TeamId", Model.TeamId } })
+    </div>
+</div>

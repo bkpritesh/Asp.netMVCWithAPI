@@ -1,0 +1,82 @@
+﻿
+@using web.Areas.Management.Models.TeamManagement
+@using web.Models
+@model User
+
+<div class="modal fade" tabindex="-1" id="addedituser" data-keyboard="false" data-backdrop="static">
+    @using (Html.BeginForm("UserDetails", "TeamManagement", new { Id = Model.Id, teamId = Model.TeamId }, FormMethod.Post, new { @class = "modal-dialog modal-lg", @enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.TeamId)
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">@(Model.Id != null ? "Edit User" : "Add User")</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "col-md-4" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Email)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Phone, new { @class = "col-md-4" })
+                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Phone)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FirstName, new { @class = "col-md-4" })
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.FirstName)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LastName, new { @class = "col-md-4" })
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.LastName)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Position, new { @class = "col-md-4" })
+                            @Html.DropDownListFor(m => m.Position, Utils.GetPositions(), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Position)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password, new { @class = "col-md-4" })
+                            @Html.PasswordFor(m => m.Password, new { value = Model.Password, @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.UserRole, new { @class = "col-md-4" })
+                            @Html.DropDownListFor(m => m.UserRoleId, (List<SelectListItem>)ViewData["Roles"], new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.UserRoleId)
+                        </div>
+                    </div>
+                    <div class="col-md-6"></div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    }
+</div>

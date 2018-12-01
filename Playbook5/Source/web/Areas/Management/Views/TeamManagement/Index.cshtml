@@ -1,0 +1,519 @@
+﻿@{
+    ViewBag.Title = "Index";
+} 
+<!-- Modal -->
+<div class="modal fade" id="modalEditTeam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document" style="width:80%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Edit Team</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label>Account Owner</label>
+                        <input type="text" id="textAccountOwner" class="form-control"  value="123"  />
+                    </div> 
+                    <div class="col-lg-3">
+                        <label>Email</label>
+                        <input type="text" id="textEmail" class="form-control"  value="123"/>
+                    </div> 
+                    <div class="col-lg-3">
+                        <label>Phone</label>
+                        <input type="text" id="textPhone" class="form-control" value="123" />
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label>Account Representative</label>
+                        <input type="text" id="textAccountRepresentative" class="form-control" value="123"  />
+                    </div> 
+                    <div class="col-lg-3">
+                        <label>Street Address</label>
+                        <input type="text" id="textStreetAddress" class="form-control" value="123"  />
+                    </div> 
+                    <div class="col-lg-3">
+                        <label>City</label> 
+                        <input type="text" id="textCity" class="form-control" value="123"  />
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label>State</label>
+                        <input type="text" id="textState" class="form-control" value="123"  />
+                    </div> 
+                    <div class="col-lg-3">
+                        <label>Country</label>
+                        <input type="text" id="textCountry" class="form-control" value="123"  />
+                    </div> 
+                    <div class="col-lg-3">
+                        <label>Zip Code</label>
+                        <input type="text" id="textZipCode" class="form-control" value="123"  />
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label>Access Code</label>
+                        <input type="text" id="textAccessCode" class="form-control" value="123"  />
+                    </div> 
+                    <div class="col-lg-3">
+                        <label>Subscription Date</label>
+                        <input type="text" id="textSubDate" class="form-control" value="123" />
+                    </div> 
+                    <div class="col-lg-3">
+                        <label>Subscription Package</label>
+                        <input type="text" id="textSubPackage" class="form-control" value="123" />
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label>Payment Status</label>
+                        <input type="text" id="textPaymentStatus" class="form-control" value="123" />
+                    </div> 
+                    <div class="col-lg-3">
+                        <label>Field Size</label>
+                        <input type="text" id="textFieldSize" class="form-control" value="123" />
+                    </div> 
+                    <div class="col-lg-3">
+                        <label>League/division/conference</label>
+                        <input type="text" id="textLDC" class="form-control"  value="123"/>
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label>Language</label>
+                        <input type="text" id="textLanguage" class="form-control" value="123"  />
+                    </div> 
+                    <div class="col-lg-3">
+                        <label>Total Plays</label>
+                        <input type="text" id="textTotalPlays" class="form-control" value="123"  />
+                    </div> 
+                    <div class="col-lg-3">
+                        <label>Roster</label>
+                        <input type="text" id="textRoster" class="form-control" value="123" />
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label>Security Tickets</label>
+                        <input type="text" id="textSecurityTickets" class="form-control" value="123" />
+                    </div> 
+                    <div class="col-lg-3">
+                        <label>Support Tickets</label>
+                        <input type="text" id="textSupportTickets" class="form-control" value="123" />
+                    </div> 
+                    <div class="col-lg-3">
+                        <label>Archived Packages</label>
+                        <input type="text" id="textArchievedPackages" class="form-control" value="123" />
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label>Account Status</label>
+                        <input type="text" id="textAccountStatus" class="form-control" value="123" />
+                    </div> 
+                    <div class="col-lg-3">
+                        <label>Notes</label>
+                        <input type="text" id="textNotes" class="form-control" value="123" />
+                    </div>
+                    <div class="col-lg-3">
+                    </div>
+                </div> 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="Team.CreateMainTeam()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalAddRoster" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Roster</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <input type="text" class="form-control" placeholder="Name" />
+                    </div>
+
+                    <div class="col-lg-4">
+                        <input type="text" class="form-control" placeholder="Email" />
+                    </div>
+
+                    <div class="col-lg-4">
+                        <select>
+                            <option>User Type</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#myTabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+    });
+</script>
+
+<div class="main-section top-section" id="Top">
+    <div class="container container_upperbuttons w-container">
+        <div class="diveblock">
+            <div class="staticpagelabeltext"><a href="#home2" aria-controls="home2" role="tab" data-toggle="tab">Roster</a></div>
+        </div>
+        <a class="button_upper button_upperleft gray-button w-button" href="#home" aria-controls="home" role="tab" data-toggle="tab">Playbook</a>
+        <div class="div_teamlogo_right w-clearfix">
+            <img class="image2" height="56" src="~/Content/images/PlaybookFive_Logo_ClearBG_navy_150.png">
+        </div>
+    </div>
+</div>
+
+<div class="main-section">
+    <div class="container w-container">
+        <div class="div-block-info divblock_topheading w-clearfix">
+            <a class="div_add_button editimagswap w-inline-block" href="javascript:void(0)" data-toggle="modal" data-target="#modalEditTeam">
+                <img class="image-3" src="~/Content/images/Icon_AddUser_Transparent-01.svg" width="64">
+            </a>
+            <h4 class="containerheading">Team Name</h4><img class="longredline" src="~/Content/images/Line_02_Med.svg">
+        </div>
+        <div class="div-block-info divblock_info">
+            <div class="row_a_normal w-row">
+                <div class="w-col w-col-3">
+                    <div class="texttitle">Account Owner</div>
+                    <div class="textdescription">Last, First Name</div>
+                </div>
+                <div class="w-col w-col-3">
+                    <div class="texttitle">Email</div>
+                    <div class="textdescription">username@email.com</div>
+                </div>
+                <div class="w-col w-col-3">
+                    <div class="texttitle">Phone</div>
+                    <div class="textdescription">(###) ###-####</div>
+                </div>
+                <div class="w-col w-col-3">
+                    <div class="texttitle">Account Representative</div>
+                    <div class="textdescription">Last, First Name</div>
+                </div>
+            </div>
+            <div class="row5items row_b_gradient w-row">
+                <div class="w-col w-col-3">
+                    <div class="texttitle">Street Address</div>
+                    <div class="textdescription">123 School Street Lane</div>
+                </div>
+                <div class="w-col w-col-3">
+                    <div class="texttitle">City</div>
+                    <div class="textdescription">City Name</div>
+                </div>
+                <div class="w-col w-col-3">
+                    <div class="texttitle">State</div>
+                    <div class="textdescription">State - no abbrev.</div>
+                </div>
+                <div class="w-col w-col-2">
+                    <div class="texttitle">Country</div>
+                    <div class="textdescription">USA</div>
+                </div>
+                <div class="w-col w-col-1">
+                    <div class="texttitle">Zip Code</div>
+                    <div class="textdescription">######</div>
+                </div>
+            </div>
+            <div class="row_a_normal w-row">
+                <div class="w-col w-col-3">
+                    <div class="texttitle">Access Code</div>
+                    <div class="textdescription">#######</div>
+                </div>
+                <div class="w-col w-col-3">
+                    <div class="texttitle">Subccription Date</div>
+                    <div class="textdescription">MM/DD/YYYY</div>
+                </div>
+                <div class="w-col w-col-3">
+                    <div class="texttitle">Subscription Package</div>
+                    <div class="textdescription"># YR, # Manual Plays</div>
+                </div>
+                <div class="w-col w-col-3">
+                    <div class="texttitle">Payment Status</div>
+                    <div class="textdescription">$#### PIF/Deposit/None</div>
+                </div>
+            </div>
+            <div class="row5items row_b_gradient w-row">
+                <div class="w-col w-col-3">
+                    <div class="texttitle">Field Size</div>
+                    <div class="textdescription">High School, College, NFL, CFL</div>
+                </div>
+                <div class="w-col w-col-3">
+                    <div class="texttitle">League/division/conference</div>
+                    <div class="textdescription">League Name</div>
+                </div>
+                <div class="w-col w-col-3">
+                    <div class="texttitle">Language</div>
+                    <div class="textdescription">Language</div>
+                </div>
+                <div class="w-col w-col-2">
+                    <div class="texttitle">Total Plays</div>
+                    <div class="textdescription">#</div>
+                </div>
+                <div class="w-col w-col-1">
+                    <div class="texttitle">Roster</div>
+                    <div class="textdescription">#</div>
+                </div>
+            </div>
+            <div class="row_a_normal w-row">
+                <div class="w-col w-col-3">
+                    <div class="texttitle">Security Tickets</div>
+                    <div class="textdescription">#</div>
+                </div>
+                <div class="w-col w-col-3">
+                    <div class="texttitle">Support Tickets</div>
+                    <div class="textdescription">#</div>
+                </div>
+                <div class="w-col w-col-3">
+                    <div class="texttitle">Archived Packages</div>
+                    <div class="textdescription">N/A</div>
+                </div>
+                <div class="w-col w-col-3">
+                    <div class="texttitle">Account Status</div>
+                    <div class="textdescription">Active</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="texttitle">Notes:</div>
+            <div class="div_notes">
+                <div class="textdescription">
+                    In-house testing account.
+                    <br>This can expand for multiple lines.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane" id="home">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="container container_upperbuttons w-container">
+                    <div class="diveblock">
+                        <div class="staticpagelabeltext"><a href="#library" aria-controls="library" role="tab" data-toggle="tab">Library</a></div>
+                    </div>
+                    <a class="button_upper button_upperleft gray-button w-button" href="#installs" aria-controls="installs" role="tab" data-toggle="tab">Installs</a>
+                    <div class="col-lg-12" style="background-color:white;">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <h4>OFFENSE</h4>
+                                <h4>12</h4>
+                            </div>
+
+                            <div class="col-lg-2">
+                                <h4>OFFENSE</h4>
+                                <h4>12</h4>
+                            </div>
+
+                            <div class="col-lg-2">
+                                <h4>OFFENSE</h4>
+                                <h4>12</h4>
+                            </div>
+
+                            <div class="col-lg-2">
+                                <h4>OFFENSE</h4>
+                                <h4>12</h4>
+                            </div>
+
+                            <div class="col-lg-2">
+                                <h4>OFFENSE</h4>
+                                <h4>12</h4>
+                            </div>
+
+                            <div class="col-lg-2">
+                                <h4>OFFENSE</h4>
+                                <h4>12</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="library">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#offense">Offense</a></li>
+                            <li><a data-toggle="tab" href="#defense">Defense</a></li>
+                            <li><a data-toggle="tab" href="#specialTeams">Special Teams</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="offense" class="tab-pane fade in active">
+                                <h3>HOME</h3>
+                                <p>Some content.</p>
+                            </div>
+                            <div id="defense" class="tab-pane fade">
+                                <h3>Menu 1</h3>
+                                <p>Some content in menu 1.</p>
+                            </div>
+                            <div id="specialteams" class="tab-pane fade">
+                                <h3>Menu 2</h3>
+                                <p>Some content in menu 2.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="installs">installs</div>
+        </div>
+    </div>
+
+    <div role="tabpanel" class="tab-pane active" id="home2">
+
+        
+        <div class="main-section">
+            <div class="container w-container">
+                <a class="addbutton div_add_button editimagswap w-inline-block" href="javascriot:void(0)" data-toggle="modal" data-target="#modalAddRoster">
+                    <img class="image-4" src="~/Content/images/Icon_AddUser_Transparent-01.svg" width="64">
+                </a>
+                <div class="div-block-info divblock_topheading">
+                    <h4 class="containerheading">Roster</h4><img class="longredline" src="~/Content/images/Line_02_Med.svg">
+                </div>
+                <div class="div-block-info divblock_info">
+                    <div class="row_a_normal w-row">
+                        <div class="column w-col w-col-3">
+                            <div class="text_rosterhistory textdescription">History</div>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="texttitle">Name</div>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="texttitle">Email</div>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="texttitle">User Type</div>
+                        </div>
+                    </div><img class="longredline" src="~/Content/images/Line_02_Med.svg">
+                    <div class="row_b_gradient row_topunderredlineonly w-row">
+                        <div class="w-col w-col-1">
+                            <div class="textdescription">1</div>
+                        </div>
+                        <div class="w-col w-col-2">
+                            <a class="linktext_view" href="#">VIEW</a>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="textdescription">Last Name, First</div>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="textdescription">username@email.com</div>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="textdescription">Head Coach</div>
+                        </div>
+                    </div>
+                    <div class="row_a_normal w-row">
+                        <div class="w-col w-col-1">
+                            <div class="textdescription">2</div>
+                        </div>
+                        <div class="w-col w-col-2">
+                            <a class="linktext_view" href="#">VIEW</a>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="textdescription">Last Name, First</div>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="textdescription">username@email.com</div>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="textdescription">Coach</div>
+                        </div>
+                    </div>
+                    <div class="row_b_gradient w-row">
+                        <div class="w-col w-col-1">
+                            <div class="textdescription">3</div>
+                        </div>
+                        <div class="w-col w-col-2">
+                            <a class="linktext_view" href="#">VIEW</a>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="textdescription">Last Name, First</div>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="textdescription">username@email.com</div>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="textdescription">Player</div>
+                        </div>
+                    </div>
+                    <div class="row_a_normal w-row">
+                        <div class="w-col w-col-1">
+                            <div class="textdescription">4</div>
+                        </div>
+                        <div class="w-col w-col-2">
+                            <a class="linktext_view" href="#">VIEW</a>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="textdescription">Last Name, First</div>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="textdescription">username@email.com</div>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="textdescription">Player</div>
+                        </div>
+                    </div>
+                    <div class="row_b_gradient w-row">
+                        <div class="w-col w-col-1">
+                            <div class="textdescription">5</div>
+                        </div>
+                        <div class="w-col w-col-2">
+                            <a class="linktext_view" href="#">VIEW</a>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="textdescription">Last Name, First</div>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="textdescription">username@email.com</div>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="textdescription">Player</div>
+                        </div>
+                    </div>
+                    <div class="row_a_normal w-row">
+                        <div class="w-col w-col-1">
+                            <div class="textdescription">6</div>
+                        </div>
+                        <div class="w-col w-col-2">
+                            <a class="linktext_view" href="#">VIEW</a>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="textdescription">Last Name, First</div>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="textdescription">username@email.com</div>
+                        </div>
+                        <div class="w-col w-col-3">
+                            <div class="textdescription">Player</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

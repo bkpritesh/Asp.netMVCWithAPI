@@ -1,0 +1,74 @@
+﻿@using web.Areas.Management.Models.TeamManagement
+@using web.Areas.Management.ViewModels
+@model PlayViewModel
+
+
+<div class="player-tab-header">
+    GENERAL NOTES
+   
+    <a href="javascript:void(0)" class="icon-btn" data-toggle="modal" data-target="#addteamnotemodel">
+        <i class="material-icons">add</i>
+        </a>
+
+    <img src="~/Content/images/red-border.png" width="100%" style="margin-top:-49px;" />
+</div>
+
+@Html.Partial("_AddEditTeamNotes", new TeamNote { Content = "" }, new ViewDataDictionary { { "TeamId", Model.TeamId } })
+
+@if (Model.TeamNotes != null && Model.TeamNotes.TeamNotes != null && Model.TeamNotes.TeamNotes.Count > 0)
+{
+
+    <table id="tblTeamNotes" class="table ui-table">
+        <thead>
+            <tr>
+                <th> </th>
+                <th>Note </th>
+            </tr>
+            <tr><td colspan="2" class="ui-td"><img class="" src="~/Content/images/red-border.png" width="100%" /> </td></tr>
+        <thead>
+        <tbody>
+            @foreach (var item in Model.TeamNotes.TeamNotes)
+                {
+                <tr>
+                    <td class="text_rosterhistory textdescription">
+                        <a class="linktext_view " target="_blank" href="#" onclick="GetTeamNoteDetail('@item.TeamId','@item.Id')">EDIT</a>
+                        |
+                        @Html.ActionLink("DELETE", "DeleteTeamNotesById", new { id = item.Id, teamId = ViewData["TeamId"] }, new
+                       {
+                           onclick = "return confirm('Are you sure, you want to delete note?')"
+                       })
+                    </td>
+                    <td>@item.Content</td>
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+}
+
+    @*@if (Model.TeamInstall != null && Model.TeamInstall.TeamInstalls != null && Model.TeamInstall.TeamInstalls.Count > 0)
+        {
+            foreach (var item in Model.TeamInstall.TeamInstalls)
+            {
+                <div class="inner-wrapper">
+                    <div class="row">
+                        <div class="col-md-2"><b>INSTALL:</b><b class="hightlight"> @item.Title</b></div>
+                        <div class="col-md-2"><b>Coach:</b> Last, First (coach)</div>
+                        <div class="col-md-2"><b>Date Issued:</b> @(item.Date.HasValue ? item.Date.Value.ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture) : "")</div>
+                        <div class="col-md-2"><b>Date Created:</b> @(item.Date.HasValue ? item.Date.Value.ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture) : "")</div>
+                        <div class="col-md-4"></div>
+                    </div>
+                    <img class="longredline" src="~/Content/images/red-border.png" width="100%">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            @item.Description
+                        </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+            }
+        }*@

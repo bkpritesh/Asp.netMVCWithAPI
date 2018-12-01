@@ -1,0 +1,181 @@
+﻿@using web.Areas.Management.Models.TeamManagement
+@using web.Models
+@model Play
+<div class="modal fade" tabindex="-1" id="addplaymodel-@ViewData["PlaybookType"].ToString().Replace(" ","_")" data-keyboard="false" data-backdrop="static">
+    @using (Html.BeginForm("SavePlay", "Plays", new { TeamId = ViewData["TeamId"] }, FormMethod.Post, new { @class = "modal-dialog", @enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(m => m.Id)
+        @Html.Hidden("PlaybookType", @ViewData["PlaybookType"])
+        @Html.HiddenFor(m => m.PreviewUrl)
+        @Html.HiddenFor(m => m.SvgUrl)
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="play-form-title">Add Play</h4>
+                @if (!string.IsNullOrEmpty(Model.Id))
+                {
+                    <a href="javascript:void(0)" class="icon-btn model-icon-btn edit-play-button" onclick="EnablePlayFields(this, true)">
+                        <i class="material-icons">mode_edit</i>
+                    </a>
+                }
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Name, new { @class = "col-md-4" })
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control play-editable-field", @disabled = "disabled" })
+                            @Html.ValidationMessageFor(m => m.Name)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.IndicatorSet, new { @class = "col-md-4" })
+                            @Html.TextBoxFor(m => m.IndicatorSet, new { @class = "form-control play-editable-field", @disabled = "disabled" })
+                            @Html.ValidationMessageFor(m => m.IndicatorSet)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Install, new { @class = "col-md-4" })
+                            @Html.TextBoxFor(m => m.Install, new { @class = "form-control play-editable-field", @disabled = "disabled" })
+                            @Html.ValidationMessageFor(m => m.Install)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.OffenseFormation.FriendlyDisplay, new { @class = "col-md-4" })
+                            @Html.TextBoxFor(m => m.OffenseFormation.FriendlyDisplay, new { @class = "form-control play-editable-field", @disabled = "disabled" })
+                            @Html.ValidationMessageFor(m => m.OffenseFormation.FriendlyDisplay)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Personnel, new { @class = "col-md-4" })
+                            @Html.DropDownListFor(m => m.Personnel, web.Models.Utils.GetPersonnels(), new { @class = "form-control play-editable-field", @disabled = "disabled" })
+                            @Html.ValidationMessageFor(m => m.Personnel)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PlayType, new { @class = "col-md-4" })
+                            @Html.DropDownListFor(m => m.PlayType, web.Models.EnumExtensions.GetTypes(Model.PlayType), new { @class = "form-control play-editable-field", @disabled = "disabled" })
+                            @Html.ValidationMessageFor(m => m.PlayType)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Hash, new { @class = "col-md-4" })
+                            @Html.DropDownListFor(m => m.Hash, web.Models.EnumExtensions.GetHash(Model.Hash), new { @class = "form-control play-editable-field", @disabled = "disabled" })
+                            @Html.ValidationMessageFor(m => m.Hash)
+                        </div>
+                    </div>
+                    <div class="col-md-6"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label("Preview Url", new { @class = "col-md-6" })
+                            @Html.TextBox("filepreview", "", new { type = "file", accept = ".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|images/*", multiple = "multiple", @class = "form-control play-editable-field", @disabled = "disabled" })
+                            @if (!string.IsNullOrEmpty(Model.PreviewUrl))
+                            {
+                                <span>@Model.PreviewUrl</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label("Svg Url", new { @class = "col-md-6" })
+                            @Html.TextBox("file", "", new { type = "file", accept = ".svg", multiple = "multiple", @class = "form-control play-editable-field", @disabled = "disabled" })
+                            @if (!string.IsNullOrEmpty(Model.SvgUrl))
+                            {
+                                <span>@Model.SvgUrl</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Active, new { @class = "col-md-6" })
+                            @Html.CheckBoxFor(m => m.Active)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @if (ViewData["RecommendedPlays"] != null)
+                            {
+                                @Html.LabelFor(m => m.RecommendedPlayList, new { @class = "col-md-4" })
+                                @Html.DropDownList("RecommendedPlaysSelect", ((List<Play>)ViewData["RecommendedPlays"]).Select(x => new SelectListItem { Text = x.Name, Value = x.Id }).ToList(), new { @class = "col-md-6 form-control play-editable-field", @disabled = "disabled" })
+                                if (!string.IsNullOrEmpty(Model.RecommendedPlayList))
+                                {
+                                    @Html.Hidden("RecommendedPlaysHidden", string.Join(",", Newtonsoft.Json.JsonConvert.DeserializeObject<List<RecommendedPlay>>(Model.RecommendedPlayList).Select(x => x.PlayId).ToList()) + ",")
+                                }
+                                else
+                                {
+                                    @Html.Hidden("RecommendedPlaysHidden")
+                                }
+                                <button type="button" class="btn btn-default col-md-2" onclick="AddRecommendedPlay(this)">Add</button>
+                            }
+                            <div class="col-md-12">
+                                <table class="table table-striped ui-table">
+                                    <thead>
+                                        <tr><td colspan="11" class="ui-td"><img class="mt-less-3" src="~/Content/images/red-border.png" width="100%" /> </td></tr>
+                                        <tr>
+                                            <th>Recommended Play Name </th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="11" class="ui-td"><img class="" src="~/Content/images/red-border.png" width="100%" /> </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="SelectedRecommendedPlays">
+                                        @if (!string.IsNullOrEmpty(Model.RecommendedPlayList))
+                                        {
+                                            foreach (var item in Newtonsoft.Json.JsonConvert.DeserializeObject<List<RecommendedPlay>>(Model.RecommendedPlayList))
+                                            {
+                                                if (item != null && item.PlayId != null)
+                                                {
+                                                    var offenseItem = ((List<Play>)ViewData["RecommendedPlays"]).FirstOrDefault(x => x.Id == item.PlayId);
+                                        <tr>
+                                            <td>@offenseItem.Name</td>
+                                            <td>
+                                                <a href='javascript:void(0)' onclick="RemoveRecommendedPlay(this,'@offenseItem.Id')" class='close'>x</a>
+                                            </td>
+                                        </tr>
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer play-navigation-control" style="display:none;">
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                @if (!string.IsNullOrEmpty(Model.Id))
+                {
+                    <button type="button" class="btn btn-default" onclick="DisablePlayFields(this)">Cancel</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                }
+            </div>
+        </div>
+    }
+</div>

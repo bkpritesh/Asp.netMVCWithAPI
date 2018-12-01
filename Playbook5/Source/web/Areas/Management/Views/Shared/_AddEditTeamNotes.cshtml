@@ -1,0 +1,33 @@
+﻿@model web.Areas.Management.Models.TeamManagement.TeamNote
+
+<div class="modal fade" tabindex="-1" id="addteamnotemodel" data-keyboard="false" data-backdrop="static">
+    @using (Html.BeginForm("SaveTeamNotes", "Install", new { TeamId = ViewData["TeamId"] }, FormMethod.Post, new { @class = "modal-dialog" }))
+    {
+        @Html.HiddenFor(m => m.Id)
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="install-form-title">Add Notes</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    @Html.LabelFor(m => m.Content, new { @class = "col-md-4" })
+                    @Html.TextAreaFor(m => m.Content, new { @class = "form-control install-editable-field" })
+                </div>
+                <div class="clearfix"></div>
+
+                @*<div class="col-md-12">
+                    @Html.LabelFor(m => m.Active, new { @class = "col-md-6" })
+                    @Html.CheckBoxFor(m => m.Active)
+                </div>*@
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,45 @@
+﻿@using web.Areas.Management.Models.TeamManagement
+@model Team
+<div class="container">
+    <div class="col-md-12 ">
+        <ul class="nav nav-tabs col-md-4">
+            <li class="active">
+                <a class="button_upper button_upperleft gray-button w-button" data-toggle="tab"
+                   href="#LibraryTab">Library</a>
+            </li>
+            <li>
+                <a class="button_upper button_upperleft gray-button w-button" data-toggle="tab" href="#InstallsTab">Installs</a>
+            </li>
+        </ul>
+        <div class="play-summary col-md-8">
+            <div class="col-md-3">
+                <h4 class="">Offense</h4>
+                <div class="">@(Model.Plays != null ? Model.Plays.Count.ToString() : "")</div>
+            </div>
+            <div class="col-md-3">
+                <h4 class="">Defense</h4>
+                <div class="">0</div>
+            </div>
+            <div class="col-md-3">
+                <h4 class="">Special Teams</h4>
+                <div class="">0</div>
+            </div>
+            <div class="col-md-3">
+                <h4 class="">Total</h4>
+                <div class="">@(Model.Plays != null ? Model.Plays.Count.ToString() : "")</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="tab-content col-md-12">
+        <div id="LibraryTab" class="tab-pane fade  in active">
+            @Html.Partial("_LibraryTabContent", Model.Plays, new ViewDataDictionary { { "TeamId", Model.Id } })
+        </div>
+
+        <div id="InstallsTab" class="tab-pane fade">
+            @Html.Partial("_InstallTabContentPartial", Model, new ViewDataDictionary { { "TeamId", Model.Id } })
+        </div>
+    </div>
+</div>

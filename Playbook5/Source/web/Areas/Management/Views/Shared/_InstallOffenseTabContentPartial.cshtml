@@ -1,0 +1,32 @@
+﻿@using web.Areas.Management.Models.TeamManagement
+@using web.Areas.Management.ViewModels
+@model PlayViewModel
+
+<div class="player-tab-header">
+    Installs
+   <a href="javascript:void(0)" class="icon-btn" data-toggle="modal" data-target="#addinstallmodel">
+        <i class="material-icons">add</i>
+    </a>   
+    <img src="~/Content/images/red-border.png" width="100%" style="margin-top:-49px;" />  
+</div>
+<div class="fullview-wrapper">
+    @{
+        var coachUsers = Model.TeamUsers.Where(x => x.Roles.Contains("Coach")).ToList();
+    }
+    @Html.Partial("_AddEditTeamInstall", new TeamInstallDTO { Title = "", Description = "" , Active=true }, new ViewDataDictionary { { "TeamId", Model.TeamId }, { "Users", coachUsers } })
+
+    
+    <div id="installgrid">
+        @if (Model.TeamInstall != null && Model.TeamInstall.TeamInstalls != null && Model.TeamInstall.TeamInstalls.Count > 0)
+        {
+            var ActiveTeamInstall = Model.TeamInstall.TeamInstalls.Where(x => x.Active == true);
+            foreach (var item in ActiveTeamInstall)
+            {
+                Html.RenderPartial("_TeamInstallPartial", item, new ViewDataDictionary { { "TeamId", Model.TeamId }, { "AllPlays", Model.Plays } });
+            }
+        }
+    </div>
+     <div id="installplayviewdetail" style="display:none;">
+
+     </div>
+</div>

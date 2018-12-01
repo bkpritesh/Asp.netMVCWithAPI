@@ -1,0 +1,31 @@
+﻿@model web.Models.Authorize.LogOnModel  
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+<div class="div-block login-diveblock mobiledivloginerror"> 
+    <div class="link-block-2 w-inline-block">
+        <div class="form-wrapper w-form">
+            @using (Html.BeginForm("LogOn", "Account", new { area = "Default" }, FormMethod.Post, new {@class = "form loginform loginmobile"}))
+            {
+                @Html.LabelFor(m => m.UserName, new {@class = "field-label login_field_label"})
+                @Html.TextBoxFor(m => m.UserName, new {@class = "login-textfield w-input", type = "email", required = "required", maxlength = "256", autofocus = "autofocus", placeholder = "user@email.com"})
+                @Html.LabelFor(m => m.Password, new {@class = "field-label login_field_label"})
+                @Html.TextBoxFor(m => m.Password, new {@class = "login-textfield w-input", type = "password", required = "required", maxlength = "256", autofocus = "autofocus", placeholder = "Password"})
+                @*<div class="text-forgotpw">Log in support</div>*@
+                <input class="submit-button-2 w-button" type="submit" value="Sign In">
+                <br />
+                <div class="error-message ">
+                    @if (!Html.ViewData.ModelState.IsValid)
+                    { 
+                          foreach (var modelError in Html.ViewData.ModelState.SelectMany(keyValuePair => keyValuePair.Value.Errors))
+                            {
+                                <div class="login_error_text text-block">@modelError.ErrorMessage </div>    
+                            }
+                    }
+               
+                </div>
+            }
+        </div>
+    </div>
+</div>

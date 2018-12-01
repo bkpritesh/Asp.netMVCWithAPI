@@ -1,0 +1,86 @@
+﻿@using web.Areas.Management.Models.TeamManagement
+@using web.Areas.Management.ViewModels
+@model PlayViewModel
+@{
+    ViewBag.Title = "TeamDetails";
+    Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-section" id="Top">
+    <div class="container container_upperbuttons w-container">
+        <ul class="nav nav-tabs">
+            <li><a class="button_upper button_upperleft gray-button w-button" href="javascript:void" onclick="window.history.go(-1)">BACK</a></li>
+            <li>
+                <a class="button_upper button_upperleft gray-button w-button" href="~/Management/TeamManagement/TeamDetails/@Model.TeamId">TEAM</a>
+            </li>
+            <li class="active"><a class="button_upper button_upperleft gray-button w-button" href="@Url.Action("Library", "Plays", new { teamId = Model.TeamId})">PLAYS</a></li>
+            <li><a class="button_upper button_upperleft gray-button w-button" href="@Url.Action("Install", "Install", new { teamId = Model.TeamId})">INSTALL</a></li>
+            <li><a class="button_upper button_upperleft gray-button w-button" href="#">REPORTING</a></li>
+        </ul>
+    </div>
+</div>
+@{
+    var offensePlaybooks = Model.Playbooks.Where(x => x.PlaybookType.Name == "Offense" || x.PlaybookType.FriendlyName == "Offense").Select(x => x.Id).ToList();
+    var offensePlays = Model.Plays.Where(x => offensePlaybooks.Contains(x.PlaybookId) && x.Active != false).ToList();
+
+    var defensePlaybooks = Model.Playbooks.Where(x => x.PlaybookType.Name == "Defense" || x.PlaybookType.FriendlyName == "Defense").Select(x => x.Id).ToList();
+    var defensePlays = Model.Plays.Where(x => defensePlaybooks.Contains(x.PlaybookId) && x.Active != false).ToList();
+
+    var specialPlaybooks = Model.Playbooks.Where(x => x.PlaybookType.Name == "Special Team" || x.PlaybookType.FriendlyName == "Special Team").Select(x => x.Id).ToList();
+    var specialPlays = Model.Plays.Where(x => specialPlaybooks.Contains(x.PlaybookId) && x.Active != false).ToList();
+
+    var archivedPlays = Model.Plays.Where(x => x.Active == false).ToList();
+}
+<div class="clearfix">
+    <div class="col-md-offset-2 col-md-8 text-center">
+        <div class="fullview-wrapper clearfix">
+            @{
+                if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="row btn-danger">
+                        @Html.Label(TempData["ErrorMessage"] as string)
+                    </div>
+                    TempData["ErrorMessage"] = null;
+                }
+            }
+
+            <div class="col-md-3">
+                <h4 class="text-uppercase">Offense</h4>
+                @*<div class="">@(Model.Plays != null ? Model.Plays.Count.ToString() : "")</div>*@
+                <div class="">@offensePlays.Count</div>
+            </div>
+            <div class="col-md-3">
+                <h4 class="text-uppercase">Defense</h4>
+                <div class="">@defensePlays.Count</div>
+            </div>
+            <div class="col-md-3">
+                <h4 class="text-uppercase">Special Teams</h4>
+                <div class="">@specialPlays.Count</div>
+            </div>
+            <div class="col-md-3">
+                <h4 class="text-uppercase">Total Plays</h4>
+                <div class="">@(offensePlays.Count + defensePlays.Count + specialPlays.Count )</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="offset-top">
+    <div id="LibraryTabk">
+        <div class="w-container tab-content">
+            <ul class="nav nav-tabs playes-tab">
+                <li class="active"><a data-toggle="tab" href="#LibraryOffense">Offense</a></li>
+                <li><a data-toggle="tab" href="#LibraryDefense">Defense</a></li>
+                <li><a data-toggle="tab" href="#LibrarySpecialTeams">Special Teams</a></li>
+                <li class="archived"><a data-toggle="tab" href="#LibraryArchive" class="disabled">Archived</a></li>
+            </ul>
+            @Html.Partial("_LibraryTabContent", offensePlays, new ViewDataDictionary { { "TeamId", Model.TeamId } })
+            @Html.Partial("_LibraryDefenseContent", defensePlays, new ViewDataDictionary { { "TeamId", Model.TeamId } })
+            @Html.Partial("_LibrarySpecialTeamContent", specialPlays, new ViewDataDictionary { { "TeamId", Model.TeamId } })
+            @Html.Partial("_LibraryArchiveContent", archivedPlays, new ViewDataDictionary { { "TeamId", Model.TeamId } })
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_AddPlayForm", new Play(), new ViewDataDictionary { { "TeamId", Model.TeamId }, { "PlaybookType", "Offense" }, { "RecommendedPlays", defensePlays } })
+@Html.Partial("_AddPlayForm", new Play(), new ViewDataDictionary { { "TeamId", Model.TeamId }, { "PlaybookType", "Defense" }, { "RecommendedPlays", offensePlays } })
+@Html.Partial("_AddPlayForm", new Play(), new ViewDataDictionary { { "TeamId", Model.TeamId }, { "PlaybookType", "Special Team" }, { "RecommendedPlays", specialPlays } })

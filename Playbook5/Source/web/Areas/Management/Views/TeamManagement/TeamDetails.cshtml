@@ -1,0 +1,416 @@
+﻿@using web.Areas.Management.Models.TeamManagement
+@model web.Areas.Management.ViewModels.TeamViewModel
+@{
+    ViewBag.Title = "TeamDetails";
+    Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
+}
+
+@if (!string.IsNullOrEmpty(Model.Team.Id))
+{
+    <div class="main-section" id="Top">
+        <div class="container container_upperbuttons w-container">
+            <ul class="nav nav-tabs">
+                <li><a class="button_upper button_upperleft gray-button w-button" href="javascript:void" onclick="window.history.go(-1)">BACK</a></li>
+                <li class="active">
+                    <a class="button_upper button_upperleft gray-button w-button" data-toggle="tab"
+                       href="#RosterTab">TEAM</a>
+                </li>
+                <li><a class="button_upper button_upperleft gray-button w-button" href="@Url.Action("Library", "Plays", new { teamId = Model.Team.Id })">PLAYS</a></li>
+                <li><a class="button_upper button_upperleft gray-button w-button" href="@Url.Action("Install", "Install", new { teamId = Model.Team.Id})">INSTALL</a></li>
+                <li><a class="button_upper button_upperleft gray-button w-button" href="#">REPORTING</a></li>
+            </ul>
+        </div>
+    </div>
+}
+
+<div id="teamDetailSection" class="fullview-wrapper w-container">
+    @{
+        if (TempData["ErrorMessage"] != null)
+        {
+            <div class="row btn-danger error-message-div">
+                @Html.Label(TempData["ErrorMessage"] as string)
+                <button class="pull-right" onclick="HideErrorMessage()">X</button>
+            </div>
+
+            TempData["ErrorMessage"] = null;
+        }
+    }
+
+    @{
+        string enableEditView = "block";
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Team.Id))
+    {
+        enableEditView = "none";
+        <div class="view-team">
+            <div class="team-header">
+                <a class="indicate-arrow" onclick="TeamDetailSectionToggle();"></a>
+                <h4 class="text-center text-uppercase">@Model.Team.Name</h4>
+                <img class="" src="~/Content/images/red-border.png" width="100%" />
+                <a href="javascript:void(0)" class="icon-btn" onclick="EnableFields('team-editable-field', 'team-navigation-control')">
+                    <i class="material-icons">mode_edit</i>
+                </a>
+            </div>
+            <div class="view-details">
+                <div class="col-md-8">
+                    <div class="clearfix pad-top-bottom">
+                        <div class="col-md-4">
+                            @Html.LabelFor(m => m.Team.AccountOwner)
+                            @Html.Label(Model.Team.AccountOwner, new { @class = "normal-font" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(m => m.Team.Email)
+                            @Html.Raw(Model.Team.Email)
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(m => m.Team.Phone)
+                            @Html.Label(Model.Team.Phone, new { @class = "normal-font" })
+                        </div>
+                    </div>
+
+                    <div class="clearfix pad-top-bottom ver-grad">
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Team.Address)
+                            @Html.Label(Model.Team.Address, new { @class = "normal-font" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Team.City)
+                            @Html.Label(Model.Team.City, new { @class = "normal-font" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.Label("State, Country")
+                            @Html.Label(Model.Team.StateOrProvince + "," + Model.Team.Country, new { @class = "normal-font" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Team.ZipCode)
+                            @Html.Label(Model.Team.ZipCode, new { @class = "normal-font" })
+                        </div>
+                    </div>
+
+                    <div class="clearfix pad-top-bottom">
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Team.AccessCode)
+                            @Html.Label(Model.Team.AccessCode, new { @class = "normal-font" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Team.AccountStartDate)
+                            @Html.Label(Model.Team.AccountStartDate.HasValue ? Model.Team.AccountStartDate.Value.ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture) : "N/A", new { @class = "normal-font" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Team.AccountPackage)
+                            @Html.Label(Model.Team.AccountPackage, new { @class = "normal-font" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Team.PaymentStatus)
+                            @Html.Label(Model.Team.PaymentStatus.ToString(), new { @class = "normal-font" })
+                        </div>
+                    </div>
+
+                    <div class="clearfix pad-top-bottom ver-grad">
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Team.Field)
+                            @Html.Label(Model.Team.Field, new { @class = "normal-font" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Team.LeagueDivConf)
+                            @Html.Label(Model.Team.LeagueDivConf != null ? Model.Team.LeagueDivConf : "", new { @class = "normal-font" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Team.Language)
+                            @Html.Label(Model.Team.Language.ToString(), new { @class = "normal-font" })
+                        </div>
+                        <div class="col-md-2">
+                            @Html.LabelFor(m => m.Team.TotalCustomPlays)
+                            @Html.Label(Model.Team.TotalCustomPlays.HasValue ? Model.Team.TotalCustomPlays.ToString() : "0", new { @class = "normal-font" })
+                        </div>
+                        <div class="col-md-1">
+                            @Html.LabelFor(m => m.Team.RosterCount)
+                            @Html.Label(Model.Team.RosterCount.HasValue ? Model.Team.RosterCount.ToString() : "0", new { @class = "normal-font" })
+                        </div>
+                    </div>
+                    <div class="clearfix pad-top-bottom">
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Team.SecurityTickets)
+                            @Html.Label(Model.Team.SecurityTickets != null ? Model.Team.SecurityTickets : "", new { @class = "normal-font" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Team.SupportTickets)
+                            @Html.Label(Model.Team.SupportTickets != null ? Model.Team.SupportTickets : "", new { @class = "normal-font" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Team.ArchivedPackages)
+                            @Html.Label(Model.Team.ArchivedPackages != null ? Model.Team.ArchivedPackages : "", new { @class = "normal-font" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Team.AccountStatus)
+                            @Html.Label(Model.Team.AccountStatus.ToString(), new { @class = "normal-font" })
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <div class="col-md-12">
+                        @Html.LabelFor(m => m.Team.AccountManager, new { @class = "display-inline" })
+                        @Html.Label(Model.Team.AccountManager, new { @class = "normal-font display-inline" })
+                    </div>
+
+                    <div class="col-md-12">
+                        @Html.LabelFor(m => m.Team.Notes)
+                        @Html.Label(Model.Team.AccountManager, new { @class = "normal-font txt-wrapper" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+    }
+
+    <div class="edit-team" style="display:@enableEditView">
+        @using (Html.BeginForm("TeamDetails", "TeamManagement", FormMethod.Post, new { @class = "form" }))
+            {
+            @Html.HiddenFor(m => m.Team.Id)
+            @Html.HiddenFor(m => m.Team.Country)
+            @Html.HiddenFor(m => m.Team.AccountStartDate)
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    @Html.LabelFor(m => m.Team.Name)
+                    @Html.TextBoxFor(m => m.Team.Name, new { @class = "col-md-12 form-control", text = Model.Team.Name })
+                </div>
+                @*<div class="col-md-12">
+                        <img class="longredline" src="http://uploads.webflow.com/58d35834dd796fad03338c77/58d55e8b61c9af590f6551c3_Line_02_Med.svg">
+                    </div>*@
+            </div>
+            @*<div class="col-md-12">
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.Team.Name)
+                        @Html.TextBoxFor(m => m.Team.Name, new { @class = "col-md-12 form-control", text = Model.Team.Name })
+                    </div>
+
+                </div>*@
+
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <h5 class="text-danger">General Information</h5>
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.AccountOwner)
+                    @Html.TextBoxFor(m => m.Team.AccountOwner, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Team.AccountOwner)
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.Email)
+                    @Html.TextBoxFor(m => m.Team.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Team.Email)
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.Phone)
+                    @Html.TextBoxFor(m => m.Team.Phone, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Team.Phone)
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.AccessCode)
+                    @Html.TextBoxFor(m => m.Team.AccessCode, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Team.AccessCode)
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <h5 class="text-danger">Location</h5>
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.Address)
+                    @Html.TextBoxFor(m => m.Team.Address, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Team.Address)
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.City)
+                    @Html.TextBoxFor(m => m.Team.City, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Team.City)
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.StateOrProvince)
+                    @Html.TextBoxFor(m => m.Team.StateOrProvince, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Team.StateOrProvince)
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.Country)
+                    @Html.DropDownListFor(m => m.Team.CountryId, Model.CountrySelectList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Team.CountryId)
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.ZipCode)
+                    @Html.TextBoxFor(m => m.Team.ZipCode, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Team.ZipCode)
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <h5 class="text-danger">Payment & Subscription</h5>
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.AccountStartDate)
+                    @Html.Label(Model.Team.AccountStartDate.HasValue ? Model.Team.AccountStartDate.Value.ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture) : "N/A")
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.AccountPackage)
+                    @Html.TextBoxFor(m => m.Team.AccountPackage, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Team.AccountPackage)
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.PaymentStatus)
+                    @Html.DropDownListFor(m => m.Team.PaymentStatus, web.Models.EnumExtensions.ToSelectList(Model.Team.PaymentStatus), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Team.PaymentStatus)
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <h5 class="text-danger">Details</h5>
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.Field)
+                    @Html.TextBoxFor(m => m.Team.Field, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Team.Field)
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.LeagueDivConf)
+                    @Html.TextBoxFor(m => m.Team.LeagueDivConf, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Team.LeagueDivConf)
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.Language)
+                    @Html.DropDownListFor(m => m.Team.Language, web.Models.EnumExtensions.ToSelectList(Model.Team.Language), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Team.Language)
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.TotalCustomPlays)
+                    @Html.TextBoxFor(m => m.Team.TotalCustomPlays, new { @class = "form-control", placeholder = "#", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.RosterCount)
+                    @Html.TextBoxFor(m => m.Team.RosterCount, new { @class = "form-control", placeholder = "#", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.SecurityTickets)
+                    @Html.TextBoxFor(m => m.Team.SecurityTickets, new { @class = "form-control", placeholder = "#", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.SupportTickets)
+                    @Html.TextBoxFor(m => m.Team.SupportTickets, new { @class = "form-control", placeholder = "#", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.ArchivedPackages)
+                    @Html.TextBoxFor(m => m.Team.ArchivedPackages, new { @class = "form-control", value = "N/A", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.AccountStatus)
+                    @Html.DropDownListFor(m => m.Team.AccountStatus, web.Models.EnumExtensions.ToSelectList(Model.Team.AccountStatus), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Team.AccountStatus)
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Team.AccountManager)
+                    @Html.TextBoxFor(m => m.Team.AccountManager, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    @Html.LabelFor(m => m.Team.Notes)
+                    @Html.TextAreaFor(m => m.Team.Notes, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-primary">
+                    Save
+                </button>
+                @if (!string.IsNullOrEmpty(Model.Team.Id))
+                {
+                    <button type="button" class="btn btn-default" onclick="DisableFields('team-editable-field', 'team-navigation-control')">
+                        Cancel
+                    </button>
+                }
+
+            </div>
+        }
+
+    </div>
+
+
+</div>
+@if (!string.IsNullOrEmpty(Model.Team.Id))
+{
+
+    var offensePlaybooks = Model.Team.Playbooks.Where(x => x.PlaybookType.Name == "Offense" || x.PlaybookType.FriendlyName == "Offense").Select(x => x.Id).ToList();
+    var offensePlays = Model.Team.Plays.Where(x => offensePlaybooks.Contains(x.PlaybookId) && x.Active != false).ToList();
+
+    var defensePlaybooks = Model.Team.Playbooks.Where(x => x.PlaybookType.Name == "Defense" || x.PlaybookType.FriendlyName == "Defense").Select(x => x.Id).ToList();
+    var defensePlays = Model.Team.Plays.Where(x => defensePlaybooks.Contains(x.PlaybookId) && x.Active != false).ToList();
+
+    var specialPlaybooks = Model.Team.Playbooks.Where(x => x.PlaybookType.Name == "Special Team" || x.PlaybookType.FriendlyName == "Special Team").Select(x => x.Id).ToList();
+    var specialPlays = Model.Team.Plays.Where(x => specialPlaybooks.Contains(x.PlaybookId) && x.Active != false).ToList();
+
+
+    <div class="offset-top">
+        <div class="col-md-8 text-center ">
+            <div class="fullview-wrapper w-container max-100">
+                <div class="col-md-3">
+                    <h4 class="text-uppercase">Offense</h4>
+                    <div class="">@offensePlays.Count</div>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="text-uppercase">Defense</h4>
+                    <div class="">@defensePlays.Count</div>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="text-uppercase">Special Teams</h4>
+                    <div class="">@specialPlays.Count</div>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="text-uppercase">Total Plays</h4>
+                    <div class="">@(offensePlays.Count + defensePlays.Count + specialPlays.Count)</div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+}
+@if (!string.IsNullOrEmpty(Model.Team.Id))
+{
+    <div class="tab-content offset-top">
+        <div id="RosterTab" class="tab-pane fade  in active">
+            @Html.Partial("_RosterTabContentPartial", Model.Team)
+        </div>
+    </div>
+}
+
+<div class="footer">
+    <div class="containterfooter w-container">
+        <div class="row w-row">
+            <div class="column-3 w-col w-col-6 w-col-tiny-tiny-stack">
+                <div class="footertextblock">Questions?&nbsp;</div><a class="link_footer_support" href="#">Contact Support</a>
+            </div>
+            <div class="column-2 w-col w-col-6 w-col-tiny-tiny-stack">
+                <a class="w-inline-block" href="http://www.playbookfive.com">
+                    <div class="footertextblock">© 2017 &nbsp;Playbook Five Inc.</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*written script because need to enable control when user wants to create new team*@
+@if (string.IsNullOrEmpty(Model.Team.Id))
+{
+    <script type="text/javascript">
+        EnableFields('team-editable-field', 'team-navigation-control')
+    </script>
+}
+
+@section generalscript {
+
+}

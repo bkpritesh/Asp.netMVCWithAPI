@@ -1,0 +1,204 @@
+﻿@model web.Areas.Management.ViewModels.ReportingViewModel
+
+@{
+    ViewBag.Title = "Team";
+}
+<link href="~/Content/css/print.css" media="print" rel="stylesheet" />
+<div class="row">&nbsp;</div>
+
+        <div class="main-section">
+            <div class="container w-container">
+                @using (Html.BeginForm("Team", "Reporting", FormMethod.Post))
+                {
+                    <div class="row">
+                        <div class="w-col w-col-12">
+                                <div class="form-group">
+                                    <label class="texttitle">Select Team</label>
+                                    @Html.DropDownListFor(m => m.TeamId, Model.TeamSelectList)
+                                </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="w-col w-col-12">
+                            <div class="w-col w-col-3">
+                                <div class="form-group">
+                                    <button type="submit">Submit</button>
+                                    @if (Model.ReportingModel.TeamName != null)
+                                    {
+                                        <a href="~/Management/Print/TeamReport?id=@Model.TeamId" target="_blank" id="printButton">Print</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.ReportingModel.TeamName != null)
+                {
+                    <div class="div-block-info divblock_topheading">
+                        <h4 class="containerheading">Team Reports</h4>
+                    </div>
+
+                    <table style="width:100%" class="table tbl-items" id="printTable">
+                        <tr>
+                            <td colspan="10" class="underlineborder"> </td>
+                        </tr>
+
+                        <tr class="div-block-info divblock_topheading">
+                            <td><h4 class="containerheading">Players</h4></td>
+                        </tr>
+                            <tr class="datalinerborder">
+                                <th class="texttitle" colspan="4">Player</th>
+                            </tr>
+
+                            @for(int i = 0; i < Model.ReportingModel.UserList.Count; i++)
+                            {
+                                <tr class="datalinerborder">
+                                    <td class="textdescription" colspan="2">
+                                        <strong>@Model.ReportingModel.UserList[i].PlayerName</strong>
+                                    </td>
+                                    <td class="textdescription" colspan="1">
+                                        <a href="#" onclick="TogglePlayerSnapShot(@i)">View Snap Shot</a>
+                                    </td>
+                                    <td class="textdescription" colspan="1">
+                                        <a href="#" onclick="TogglePlays(@i)">View Players Plays</a>
+                                    </td>
+                                </tr>
+                                <tbody class="datalinerborder" style="display:none;" id='_playersnapshot@(i)'>
+                                    <tr>
+                                        <td colspan="4">
+                                            <div class="row">
+                                                <div class="w-col w-col-12">
+                                                    <div class="w-col w-col-3">
+                                                        <div class="texttitle">Overall Percentage</div>
+                                                        <div class="textdescription">@Model.ReportingModel.UserList[i].SnapShot.OverallPercentage</div>
+                                                    </div>
+                                                    <div class="w-col w-col-3">
+                                                        <div class="texttitle">
+                                                            Most Viewed From Position
+                                                        </div>
+                                                        <div class="textdescription">
+                                                            @Model.ReportingModel.UserList[i].SnapShot.MostViewFromPosition
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-col w-col-3">
+                                                        <div class="texttitle">
+                                                            Least Viewed From Position
+                                                        </div>
+                                                        <div class="textdescription">
+                                                            @Model.ReportingModel.UserList[i].SnapShot.LeastViewFromPosition
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-col w-col-3">
+                                                        <div class="texttitle">
+                                                            Most Viewed Play
+                                                        </div>
+                                                        <div class="textdescription">
+                                                            @Model.ReportingModel.UserList[i].SnapShot.MostViewedPlay
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">&nbsp;</div>
+                                            <div class="row">
+
+                                                <div class="w-col w-col-12">
+                                                    <div class="w-col w-col-3">
+                                                        <div class="texttitle">
+                                                            Amount Of Plays Without Key Indicator
+                                                        </div>
+                                                        <div class="textdescription">
+                                                            @Model.ReportingModel.UserList[i].SnapShot.AmountOfPlaysWithoutKeyIndicator
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-col w-col-3">
+                                                        <div class="texttitle">
+                                                            Least Viewed Play
+                                                        </div>
+                                                        <div class="textdescription">
+                                                            @Model.ReportingModel.UserList[i].SnapShot.LeastViewedPlay
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-col w-col-3">
+                                                        <div class="texttitle">
+                                                            Total Reps
+                                                        </div>
+                                                        <div class="textdescription">
+                                                            @Model.ReportingModel.UserList[i].SnapShot.TotalReps
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-col w-col-1">
+                                                        <div class="texttitle">
+                                                            Total Incorrect
+                                                        </div>
+                                                        <div class="textdescription">
+                                                            @Model.ReportingModel.UserList[i].SnapShot.TotalIncorrect
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-col w-col-1">
+                                                        <div class="texttitle">
+                                                            Total Correct
+                                                        </div>
+                                                        <div class="textdescription">
+                                                            @Model.ReportingModel.UserList[i].SnapShot.TotalCorrect
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody class="datalinerborder" style="display:none;" id='_playssnapshot@(i)'>
+                                    <tr>
+                                        <th class="texttitle">
+                                            Play Name
+                                        </th>
+                                        <th class="texttitle">
+                                            Position
+                                        </th>
+                                        <th class="texttitle">
+                                            Key Indicator
+                                        </th>
+                                        <th class="texttitle">
+                                            Reps
+                                        </th>
+                                    </tr>
+                                    @foreach (var play in Model.ReportingModel.UserList[i].PlayList)
+                                    {
+                                    <tr>
+                                        <td class="textdescription">
+                                            @play.PlayName
+                                        </td>
+                                        <td class="textdescription">
+                                            @play.Position
+                                        </td>
+                                        <td class="textdescription">
+                                            @play.KeyIndicator
+                                        </td>
+                                        <td class="textdescription">
+                                            @play.Reps
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+
+                            }
+
+                        </table>
+                }
+                else
+                {
+                    <text>No Results</text>
+                }
+            </div>
+        </div>
+
+        <script>
+            function TogglePlayerSnapShot(i) {
+                $('#_playersnapshot' + i).toggle(500);
+            }
+            function TogglePlays(i) {
+                $('#_playssnapshot' + i).toggle(500);
+            }
+        </script>

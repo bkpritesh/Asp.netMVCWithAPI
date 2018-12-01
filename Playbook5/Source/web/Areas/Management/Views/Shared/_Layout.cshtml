@@ -1,0 +1,77 @@
+﻿@using web.ApiHelper.Implementation
+@using web.Models
+@{
+    UserSessionBus userSession = new UserSessionBus();
+}
+
+<!DOCTYPE html>
+<!--  This site was created in Webflow. http://www.webflow.com -->
+<!--  Last Published: Sat Apr 01 2017 07:04:40 GMT+0000 (UTC)  -->
+<html data-wf-page="587bcab8e8f32a5e7f031b25" data-wf-site="587bcab7e8f32a5e7f031b22">
+<head>
+    <meta charset="utf-8">
+    <title>Playbook Five - @ViewBag.Title</title>
+    <meta content="Playbook Five - @ViewBag.Title" name="description">
+    <meta content="@ViewBag.Title" property="og:title">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="Webflow" name="generator">
+    @Styles.Render("~/Content/Allcss")
+    @Scripts.Render("~/Content/Allscript")
+    <link href="https://vitalets.github.io/angular-xeditable/dist/css/xeditable.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="text/javascript">
+        WebFont.load({
+            google: {
+                families: [
+                    "Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic",
+                    "Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic"
+                ]
+            }
+        });
+    </script>
+
+    <link href="~/Content/images/PB5_App_Logo_02_Square_favicon.png" rel="shortcut icon" type="image/x-icon">
+    <link href="~/Content/images/PB5_App_Logo_02_Square_256.png" rel="apple-touch-icon">
+
+</head>
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                    <a class="logo-block w-inline-block" href="@Url.Action("teams", "TeamManagement", new { area = "Management"  }, Request.Url.Scheme)">
+                        <img class="logo" height="40" src="~/Content/images/Logo_Square_01.svg">
+                    </a>
+            </div>
+            <div id="navbar1" class="navbar-collapse collapse">
+                @*<ul class="nav navbar-nav">
+                    <li><a href="@Url.Action("Teams", "TeamManagement", new { area = "Management" }, Request.Url.Scheme)">Teams</a></li>
+                    <li><a href="@Url.Action("Team", "Reporting", new { area = "Management" }, Request.Url.Scheme)">Reporting</a></li>
+                </ul>*@
+                <div class="nav navbar-nav navbar-right">
+                    <div class="navtitle">
+                        @userSession.FullName.ToUpper() |
+                    <a class="link-block w-clearfix w-inline-block" href="@Url.Action("LogOff", "Account", new { area = "Default"  }, Request.Url.Scheme)">
+                        <img class="img_icon_logout" src="~/Content/images/Icon_LogOut.svg" width="24">
+                    </a>
+                </div>
+
+            </div>
+
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+    <!--/.container-fluid -->
+</nav>
+
+<div data-ix="hide-side-bar-on-click" class="offset-top">@RenderBody() </div>
+
+<!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
+@RenderSection("generalscript", required: false)
+<div id="modalcontent">
+
+</div>
+</body>
+
+</html>

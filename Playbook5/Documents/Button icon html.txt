@@ -1,0 +1,23 @@
+Add button icon
+
+previous
+<a href="javascript:void(0)" data-toggle="modal" data-target="#addinstallmodel">
+        <img class="image-4" src="~/Content/images/add-icon.png" width="64" />
+    </a>
+
+After google icon
+<i class="material-icons">add</i>
+class="icon-btn"
+
+-------------------------------------------------------
+
+Edit button icon
+
+previos
+ <a href="javascript:void(0)" class="div_add_button editimagswap w-inline-block" onclick="EnableFields('team-editable-field', 'team-navigation-control')">
+                    <img class="image-4" src="http://uploads.webflow.com/58d35834dd796fad03338c77/58d55e870cfe28f5401c0618_Icon_Edit.svg" width="64">
+                </a>
+
+After google icon
+<i class="material-icons">mode_edit</i>
+class="icon-btn"

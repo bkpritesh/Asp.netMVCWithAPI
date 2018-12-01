@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<style>
+    .underlineborder {
+        height: 2px;
+        background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgb(201, 66, 40) 50%,rgba(0,0,0,0) 100%);
+    }
+</style>
+<div style="padding-top: 70px;padding-right: 30px;padding-left: 30px;">
+    <div class="row">
+
+
+
+        <div id="sports2" class="col-lg-4" style="cursor: pointer;">
+            <div class="thumbnail" style="background-color: #f5f5ff; -webkit-box-shadow: -2px 6px 17px 0px rgba(0, 0, 0, 0.75); -moz-box-shadow: -2px 6px 17px 0px rgba(0, 0, 0, 0.75); box-shadow: -2px 6px 17px 0px rgba(0, 0, 0, 0.75);">
+                <br />
+                <h3 style="text-align: center;">FOOTBALL</h3><br />
+                <div class="underlineborder"></div>
+                <br />
+
+                <h4 style="text-align: center;">PLAY EDITOR</h4>
+                <table style="margin: 0 auto;">
+                    <tr>
+                        <td style="float: right;">Remaining playbooks:</td>
+                        <td>&emsp;&emsp;&emsp;##</td>
+                    </tr>
+                    <tr>
+                        <td style="float: right;">Remaining plays:</td>
+                        <td>&emsp;&emsp;&emsp;##</td>
+                    </tr>
+                </table><br />
+                <h4 style="text-align: center;">ACCOUNTS</h4>
+                <table style="margin: 0 auto;">
+                    <tr>
+                        <td style="float: right;">High School:</td>
+                        <td>&emsp;&emsp;&emsp;##</td>
+                    </tr>
+                    <tr>
+                        <td style="float: right;">College:</td>
+                        <td>&emsp;&emsp;&emsp;##</td>
+                    </tr>
+                    <tr>
+                        <td style="float: right;">Pro:</td>
+                        <td>&emsp;&emsp;&emsp;##</td>
+                    </tr>
+                </table><br />
+                <h4 style="text-align: center;">PAYMENTS</h4>
+                <table style="margin: 0 auto;">
+                    <tr>
+                        <td style="float: right;">Deposits:</td>
+                        <td>&emsp;&emsp;&emsp;##</td>
+                    </tr>
+                    <tr>
+                        <td style="float: right;">Past Due:</td>
+                        <td>&emsp;&emsp;&emsp;##</td>
+                    </tr>
+                </table><br /><br />
+            </div>
+        </div>
+
+    </div>
+</div>
+@section generalscript {
+
+    <script>
+        $(document).ready(function() {
+            $("#sports1,#sports2,#sports3").click(function () {
+                var url = '@Url.Action("SportsMenu", "Home", new { area = "Default" }, Request.Url.Scheme)';
+                window.location.href = url ;
+            });
+        });
+    </script>
+}
+
